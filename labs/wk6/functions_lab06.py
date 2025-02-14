@@ -138,7 +138,38 @@ def inception_dream(num_dream_lvls):
         return 1 + int(inception_dream(num_dream_lvls - 1))
 
 # Lab 06 - Question 3 and 4
+def save_game (winner, hero_name="", num_stars=0):
+    with open("file.txt", "a") as file:
+        if winner == "Player":
+            file.write("The player " + hero_name + " has won the game and gained " + num_stars + "stars" + ".\n")
+        elif winner == "Monster":
+            file.write("The monster has won the game.\n")
 
 # Lab 06 - Question 5a
-
+def load_game():
+    try:
+        with open("file.txt", "r") as file:
+            lines = file.readlines()
+            if lines:
+                last_line = lines[-1].strip()
+                print(last_line)
+            file.close()
+    except FileNotFoundError:
+        print("No game has been saved yet.")
 # Lab 06 - Question 5b
+def adjust_combat_strength(combat_strength, m_combat_strength):
+    last_game = load_game()
+    if last_game:
+        if "The player" in last_game and "gained" in last_game:
+            num_stars = last_game.split(" ")[-2]
+            if num_stars > 3:
+                print("     |       Increasing the monster combat strength")
+                m_combat_strength += 1
+        elif "The monster" in last_game:
+            print("     |       Increasing the hero combat strength")
+            combat_strength += 1
+        else:
+            print("     |       No combat strength adjustment")
+    else:
+        print("     |       No game has been saved yet.")
+    return combat_strength, m_combat_strength
