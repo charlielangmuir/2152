@@ -2,6 +2,7 @@ import os
 import platform
 import socket
 import multiprocessing as mp
+import sys
 print("Current machinw type")
 print(platform.machine())
 print("====================================")
@@ -56,8 +57,9 @@ if pid==0:
 else:
     #Parent process
     print(f"\nParent process id: {os.getpid()}")
-#if __name__ == '__main__':
- #   context = mp.get_context('spawn')
-  #  pid = context.Process(target=fork_process, args=())
-   # pid.start()
-    #pid.join()
+    print("wait for the child to complete the modification")
+    os.wait()
+    print("Child process has finished the modification")
+    file_object_TextIO.close()
+print(f"\n[Process {os.getpid()}] File closed")
+sys.exit()
